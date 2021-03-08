@@ -1,14 +1,17 @@
 package richard.test.workflow.service;
 
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.activiti.editor.constants.ModelDataJsonConstants;
+import org.activiti.engine.*;
 import org.activiti.engine.repository.DeploymentBuilder;
+import org.activiti.engine.repository.Model;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service("activityService")
@@ -27,13 +30,47 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
 
     private RepositoryService repositoryService;
 
+    public String createModel() {
+
+//        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+//
+//        RepositoryService repositoryService = processEngine.getRepositoryService();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode editorNode = objectMapper.createObjectNode();
+        editorNode.put("id", "canvas");
+        editorNode.put("resourceId", "canvas");
+        ObjectNode stencilSetNode = objectMapper.createObjectNode();
+        stencilSetNode.put("namespace", "http://b3mn.org/stencilset/bpmn2.0#");
+        editorNode.replace("stencilset", stencilSetNode);
+        Model modelData = this.repositoryService.newModel();
+
+        ObjectNode modelObjectNode = objectMapper.createObjectNode();
+        modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, "hello1111");
+        modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
+        String description = "hello1111";
+        modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, description);
+        modelData.setMetaInfo(modelObjectNode.toString());
+        modelData.setName("hello1111");
+        modelData.setKey("12313123");
+
+        //保存模型
+        this.repositoryService.saveModel(modelData);
+        try {
+            this.repositoryService.addModelEditorSource(modelData.getId(), editorNode.toString().getBytes("utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return modelData.getId();
+    }
+
     /**
      * 注册一个流程
      * @return
      */
     @Override
     public boolean createDeployment() {
-        DeploymentBuilder builder=repositoryService.createDeployment();
+        DeploymentBuilder builder = this.repositoryService.createDeployment();
         builder.addClasspathResource("test.bpmn");
         builder.deploy();
         return true;
@@ -46,7 +83,7 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
     public boolean getTaskList(){
         //获取待办的一些信息，这里可以传入需要查询的用户，
         //我这里查询的所有待办
-        List<Task> tasks = taskService.createTaskQuery().list();
+        List<Task> tasks = this.taskService.createTaskQuery().list();
         for (Task t:tasks) {
             System.out.println(t.getCreateTime());
             System.out.println(t.getId());
@@ -65,7 +102,7 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
      */
     @Override
     public boolean startActivityDemo(String key) {
-        ProcessInstance test = runtimeService.startProcessInstanceByKey(key);
+        ProcessInstance test = this.runtimeService.startProcessInstanceByKey(key);
         String id = test.getId();
         System.out.println("流程id="+id);
         /*  */
