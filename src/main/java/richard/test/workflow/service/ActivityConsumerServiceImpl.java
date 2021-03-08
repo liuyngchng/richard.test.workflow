@@ -15,12 +15,11 @@ import java.util.List;
 public class ActivityConsumerServiceImpl implements ActivityConsumerService {
 
     @Autowired
-    ActivityConsumerServiceImpl(RuntimeService runtimeService, TaskService taskService, RepositoryService repositoryService) {
-        this.runtimeService = runtimeService;
-        this.taskService = taskService;
-        this.repositoryService = repositoryService;
+    ActivityConsumerServiceImpl(RuntimeService runs, TaskService t, RepositoryService repo) {
+        this.runtimeService = runs;
+        this.taskService = t;
+        this.repositoryService = repo;
     }
-
 
     private RuntimeService runtimeService;
 
@@ -59,7 +58,6 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
         return true;
     }
 
-
     /**
      * 根据流程key开启一个流程
      * @param key
@@ -96,6 +94,4 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
         runtimeService.deleteProcessInstance(runId,"结束");
         return true;
     }
-
-
 }
