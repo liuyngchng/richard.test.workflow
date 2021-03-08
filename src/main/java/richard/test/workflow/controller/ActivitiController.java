@@ -27,7 +27,7 @@ public class ActivitiController {
      */
     @RequestMapping("/startActivityDemo")
     public Boolean startActivityDemo(){
-        return activityConsumerService.startActivityDemo("test01");
+        return activityConsumerService.startActivityDemo("test");
     }
 
     /**
