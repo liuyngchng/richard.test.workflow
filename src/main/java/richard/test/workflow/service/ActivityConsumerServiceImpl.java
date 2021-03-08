@@ -14,13 +14,18 @@ import java.util.List;
 @Service("activityService")
 public class ActivityConsumerServiceImpl implements ActivityConsumerService {
 
+    @Autowired
+    ActivityConsumerServiceImpl(RuntimeService runtimeService, TaskService taskService, RepositoryService repositoryService) {
+        this.runtimeService = runtimeService;
+        this.taskService = taskService;
+        this.repositoryService = repositoryService;
+    }
 
-    @Autowired
+
     private RuntimeService runtimeService;
-    @Autowired
+
     private TaskService taskService;
 
-    @Autowired
     private RepositoryService repositoryService;
 
     /**
@@ -30,7 +35,7 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
     @Override
     public boolean createDeployment() {
         DeploymentBuilder builder=repositoryService.createDeployment();
-        builder.addClasspathResource("test01.bpmn");
+        builder.addClasspathResource("test.bpmn");
         builder.deploy();
         return true;
     }
@@ -62,8 +67,8 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
      */
     @Override
     public boolean startActivityDemo(String key) {
-        ProcessInstance test01 = runtimeService.startProcessInstanceByKey(key);
-        String id = test01.getId();
+        ProcessInstance test = runtimeService.startProcessInstanceByKey(key);
+        String id = test.getId();
         System.out.println("流程id="+id);
         /*  */
         /*    String assignee = "abc";*/

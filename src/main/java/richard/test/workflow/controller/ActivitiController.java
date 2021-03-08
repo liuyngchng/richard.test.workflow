@@ -18,7 +18,7 @@ public class ActivitiController {
      */
     @RequestMapping("/createDeployment")
     public Boolean createDeployment(){
-        return activityConsumerService.createDeployment();
+        return this.activityConsumerService.createDeployment();
     }
 
     /**
@@ -26,8 +26,8 @@ public class ActivitiController {
      * @return
      */
     @RequestMapping("/startActivityDemo")
-    public Boolean startActivityDemo(){
-        return activityConsumerService.startActivityDemo("test");
+    public Boolean startActivityDemo(String key){
+        return this.activityConsumerService.startActivityDemo(key);
     }
 
     /**
@@ -36,7 +36,7 @@ public class ActivitiController {
      */
     @RequestMapping("/getTaskList")
     public boolean getTaskList(){
-        return activityConsumerService.getTaskList();
+        return this.activityConsumerService.getTaskList();
     }
 
     /**
@@ -46,7 +46,7 @@ public class ActivitiController {
      */
     @RequestMapping("/complete")
     public boolean complete(String taskId){
-        return activityConsumerService.complete(taskId);
+        return this.activityConsumerService.complete(taskId);
     }
     /**
      * 根据流程id直接结束流程
@@ -55,7 +55,7 @@ public class ActivitiController {
      */
     @RequestMapping("/deleteProcessInstance")
     public boolean deleteProcessInstance(String runId){
-        return activityConsumerService.deleteProcessInstance(runId);
+        return this.activityConsumerService.deleteProcessInstance(runId);
     }
 
 
