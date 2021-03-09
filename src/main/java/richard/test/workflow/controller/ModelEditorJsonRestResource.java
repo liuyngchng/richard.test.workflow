@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.servlet.ModelAndView;
+import richard.test.workflow.service.ActivityConsumerService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Map;
 
@@ -33,12 +36,19 @@ public class ModelEditorJsonRestResource{
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private ActivityConsumerService activityConsumerService;
 
-//    @RequestMapping("/modeler.html")
-//    public ModelAndView getModel() {
-//        ModelAndView modelAndView = new ModelAndView("modeler");
-//        return modelAndView;
-//    }
+
+
+    @RequestMapping("/model/create")
+    public void create(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.sendRedirect(request.getContextPath() + "/modeler?modelId=" + this.activityConsumerService.createModel());
+        } catch (Exception e) {
+            System.out.println("创建模型失败：");
+        }
+    }
 
     @RequestMapping(value="/model/{modelId}/json", method = RequestMethod.GET, produces = "application/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {

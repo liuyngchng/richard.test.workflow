@@ -16,14 +16,6 @@ public class ActivitiController {
     private ActivityConsumerService activityConsumerService;
 
 
-    @RequestMapping("/create")
-    public void create(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            response.sendRedirect(request.getContextPath() + "/static/modeler.html" + this.activityConsumerService.createModel());
-        } catch (Exception e) {
-            System.out.println("创建模型失败：");
-        }
-    }
 
     /**
      * 注册流程
