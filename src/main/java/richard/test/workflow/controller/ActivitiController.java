@@ -1,12 +1,5 @@
 package richard.test.workflow.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.activiti.editor.constants.ModelDataJsonConstants;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +19,7 @@ public class ActivitiController {
     @RequestMapping("/create")
     public void create(HttpServletRequest request, HttpServletResponse response) {
         try {
-            response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + this.activityConsumerService.createModel());
+            response.sendRedirect(request.getContextPath() + "/static/modeler.html" + this.activityConsumerService.createModel());
         } catch (Exception e) {
             System.out.println("创建模型失败：");
         }

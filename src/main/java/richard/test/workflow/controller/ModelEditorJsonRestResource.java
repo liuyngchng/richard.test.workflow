@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author
@@ -28,6 +32,13 @@ public class ModelEditorJsonRestResource{
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
+//    @RequestMapping("/modeler.html")
+//    public ModelAndView getModel() {
+//        ModelAndView modelAndView = new ModelAndView("modeler");
+//        return modelAndView;
+//    }
 
     @RequestMapping(value="/model/{modelId}/json", method = RequestMethod.GET, produces = "application/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {

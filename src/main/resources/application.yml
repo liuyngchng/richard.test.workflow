@@ -15,5 +15,9 @@ spring:
     #   process-definition-location-suffixes:
     #      - **.bpmn
     #      - **.bpmn20.xml
-
+  thymeleaf:
+    prefix: "classpath:/"
+    suffix: ".html"
+  mvc:
+    static-path-pattern: /** #默认配置的 /** 映射到 /static （或/public、/resources、/META-INF/resources）
 database-platform: org.hibernate.dialect.MySQL5Dialect
