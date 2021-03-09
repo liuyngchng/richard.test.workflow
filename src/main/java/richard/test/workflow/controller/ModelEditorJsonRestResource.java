@@ -44,7 +44,7 @@ public class ModelEditorJsonRestResource{
     @RequestMapping("/model/create")
     public void create(HttpServletRequest request, HttpServletResponse response) {
         try {
-            response.sendRedirect(request.getContextPath() + "/modeler?modelId=" + this.activityConsumerService.createModel());
+            response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + this.activityConsumerService.createModel());
         } catch (Exception e) {
             System.out.println("创建模型失败：");
         }
