@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.springframework.web.servlet.ModelAndView;
 import richard.test.workflow.service.ActivityConsumerService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * @author
@@ -38,8 +33,6 @@ public class ModelEditorJsonRestResource{
 
     @Autowired
     private ActivityConsumerService activityConsumerService;
-
-
 
     @RequestMapping("/model/create")
     public void create(HttpServletRequest request, HttpServletResponse response) {

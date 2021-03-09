@@ -5,17 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import richard.test.workflow.service.ActivityConsumerService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/activiti")
 public class ActivitiController {
 
     @Autowired
     private ActivityConsumerService activityConsumerService;
-
-
 
     /**
      * 注册流程
@@ -62,7 +57,5 @@ public class ActivitiController {
     public boolean deleteProcessInstance(String runId){
         return this.activityConsumerService.deleteProcessInstance(runId);
     }
-
-
 
 }
