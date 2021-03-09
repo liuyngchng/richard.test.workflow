@@ -35,7 +35,6 @@ public class ActivityConsumerServiceImpl implements ActivityConsumerService {
 //        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 //
 //        RepositoryService repositoryService = processEngine.getRepositoryService();
-
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode editorNode = objectMapper.createObjectNode();
         editorNode.put("id", "canvas");
