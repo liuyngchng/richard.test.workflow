@@ -39,19 +39,25 @@ public class ModelSaveRestResource {
     @ResponseStatus(value = HttpStatus.OK)
     public void saveModel(@PathVariable String modelId, String name, String description, String json_xml, String svg_xml) {
         try {
+            LOGGER.info("saveModel modelId ={}, name = {}, desc = {}, json_xml = {}, svg_xml = {}",
+                modelId,
+                name,
+                description,
+                json_xml,
+                svg_xml
+            );
+            Model model = this.repositoryService.getModel(modelId);
 
-            Model model = repositoryService.getModel(modelId);
-
-            ObjectNode modelJson = (ObjectNode) objectMapper.readTree(model.getMetaInfo());
+            ObjectNode modelJson = (ObjectNode) this.objectMapper.readTree(model.getMetaInfo());
 
             modelJson.put("name", name);
             modelJson.put("description", description);
             model.setMetaInfo(modelJson.toString());
             model.setName(name);
 
-            repositoryService.saveModel(model);
+            this.repositoryService.saveModel(model);
 
-            repositoryService.addModelEditorSource(model.getId(), json_xml.getBytes("utf-8"));
+            this.repositoryService.addModelEditorSource(model.getId(), json_xml.getBytes("utf-8"));
 
             InputStream svgStream = new ByteArrayInputStream(svg_xml.getBytes("utf-8"));
             TranscoderInput input = new TranscoderInput(svgStream);
@@ -64,7 +70,7 @@ public class ModelSaveRestResource {
             // Do the transformation
             transcoder.transcode(input, output);
             final byte[] result = outStream.toByteArray();
-            repositoryService.addModelEditorSourceExtra(model.getId(), result);
+            this.repositoryService.addModelEditorSourceExtra(model.getId(), result);
             outStream.close();
 
         } catch (Exception e) {

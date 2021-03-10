@@ -37,7 +37,9 @@ public class ModelEditorJsonRestResource{
     @RequestMapping("/model/create")
     public void create(HttpServletRequest request, HttpServletResponse response) {
         try {
-            response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + this.activityConsumerService.createModel());
+            String id = this.activityConsumerService.createModel();
+            LOGGER.info("create model {}", id);
+            response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + id);
         } catch (Exception e) {
             System.out.println("创建模型失败：");
         }
@@ -46,7 +48,7 @@ public class ModelEditorJsonRestResource{
     @RequestMapping(value="/model/{modelId}/json", method = RequestMethod.GET, produces = "application/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {
         ObjectNode modelNode = null;
-
+        LOGGER.info("getEditorJson {}", modelId);
         Model model = repositoryService.getModel(modelId);
 
         if (model != null) {
