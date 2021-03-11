@@ -1,7 +1,17 @@
 # a workflow test demo
 
-##1. /model/create
+## 1. model
+### 1.1 /model/create
+
 [创建模型](http://localhost:8081/model/create)
+
+### 1.2 /model/42501/json
+
+```
+select * from ACT_RE_MODEL where ID_ = '42501';
+select * from ACT_GE_BYTEARRAY where ID_ = ACT_RE_MODEL.EDITOR_SOURCE_VALUE_ID_;
+
+```
 
 ## 2. table
 
